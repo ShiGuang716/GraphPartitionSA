@@ -17,6 +17,7 @@ class GRAPH {
     std::vector<std::vector<int>>   adjMat;     //邻接矩阵  也可以用邻接表
     /*————图结构所需变量————*/
 
+    double perMesCost, perCalcCost; //单个通信成本和单个计算成本    
     std::vector<int>    reassign;   //重分区映射
 
     struct Solution{
@@ -31,58 +32,60 @@ class GRAPH {
     /**
      * 读取文件
     */
-    void read(char *){}
+    void read(char *);
 
     /**
      * 计算代价之前的预处理，应该可以不用
     */
-    void packing(){}
+    void packing();
 
-    void perturb(){}
+    void perturb();
+
+    /**
+     * 将当前解保存到sol中
+    */
+    void get_solution(Solution &sol);
+
     /**
      * 将当前解进行保存
     */
-    void keep_sol(){}
+    void keep_sol();
 
     /**
      * 将当前解作为最优解进行保存
     */
-    void keep_best(){}
+    void keep_best();
 
     /**
-     * 恢复到保存的最后一个解
+     * 将当前解恢复为sol
     */
-    void recover(){}
+    void recover(Solution &sol);
 
     /**
-     * 恢复到保存的最优解
+     * 将当前解恢复到保存的最优解
     */
-    void recover_best(){}
+    void recover_best();
 
     /**
      * 返回当前解的代价
     */
-    double getCost(){}
+    double getCost();
 
     /**
      * 返回顶点个数
     */
-    int size(){}
+    int size();
 };
 
 /**
  * 返回0~1的一个随机数
 */
-float rand_01() {
-
-}
+float rand_01();
 
 /**
  * 返回当前时间
 */
-double seconds(){
-
-}
+double seconds();
 
 
 #endif
