@@ -41,7 +41,7 @@ double SA_Partition(GRAPH &graph, int k, int local, float term_T){
     double pre_cost, best, cost;
     float d_cost, reject_rate;
 
-    int N = k * graph.size();
+    int N = k * graph.size();       //N越大运行越久
     float P=0.9;
     float T, actual_T=1;
     double avg=init_avg;

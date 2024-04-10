@@ -43,7 +43,9 @@ class GRAPH {
     int V;                              //顶点个数
     std::vector<Partition>  partitions; //顶点（分区）列表
 
-    double perMesCost, perCalcCost; //单次通信成本和单次计算成本    
+    double perMesCost, perCalcCost; //单次通信成本和单次计算成本
+    double normCost;   //归一化总成本
+
     std::vector<int>    par2node;   //partitionId到nodeId的映射
 
     struct Solution{
@@ -109,6 +111,17 @@ class GRAPH {
      * 返回顶点个数
     */
     int size();
+
+    /**
+     * 输出当前保存的解
+    */
+    void printSol();
+
+    /**
+     * 归一化cost
+    */
+    void normalizeCost(int t) ;
+
 };
 
 /**

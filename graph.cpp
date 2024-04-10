@@ -147,11 +147,37 @@ double GRAPH::getCost(){
     //获取各个node计算次数的最大值，作为总计算次数
     totalCalcTimes = *std::max_element(perNodeCalcTimes.begin(), perNodeCalcTimes.end());
 
-    return perMesCost*totalMesTimes + perCalcCost*totalCalcTimes;
+    double totalCost = perMesCost*totalMesTimes + perCalcCost*totalCalcTimes;
+
+    return totalCost / normCost;
 }
 
 int GRAPH::size(){
     return V;
+}
+
+void GRAPH::printSol() {
+    printf("Failed PartitionId     nodeID\n");
+    for(int i=0; i<V; ++i){
+        if(Partition::isFailedPartition(i)){
+            printf("\t%d\t\t%d\n", i, par2node[i]);
+        }
+    }
+    printf("Cost = %lf", getCost()*normCost);
+}
+
+void GRAPH::normalizeCost(int t) {
+    //getCost() return总代价除以normCost的值
+    //设置normCost为1，则返回值等于总代价
+    normCost = 1.0;
+
+    double tempNormCost = 0;
+    for(int i=0; i < t; ++i){
+        perturb();
+        tempNormCost += getCost();
+    }
+    normCost = tempNormCost / t;
+    printf("normalize cost=%.0f\n", normCost);
 }
 
 /*-------------------------------------------------*/
