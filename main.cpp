@@ -10,6 +10,7 @@ int main(){
     float term_temp=0.1;
 
     //TODO() 输入的提示以及命令行参数读取
+    std::cout<<"Please enter filename:"<<std::endl;
     std::cin>>filename;
 
     try{

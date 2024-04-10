@@ -44,6 +44,15 @@ void GRAPH::read(char * filename){
         par2node[i] = Partition::getInitNodeId(i);
     }
 
+    //输出读取的图结构
+    // for(const auto& partition : partitions) {
+    //     std::cout<<partition.Id<<" "<<partition.calcTimes<<"   ";
+
+    //     for(const auto& edge: partition.edges){
+    //         std::cout<<edge.targetPartitionId<<" "<<edge.sendMessageTimes<<"  ";
+    //     }
+    //     std::cout<<std::endl;
+    // }
 }
 
 void GRAPH::packing(){
@@ -100,8 +109,8 @@ void GRAPH::recover_best(){
 }
 
 double GRAPH::getCost(){
-    int totalMesTimes, totalCalcTimes;
-    std::vector<int> perNodeCalcTimes;  //各个node上的总计算代价
+    int totalMesTimes = 0, totalCalcTimes = 0;
+    std::vector<int> perNodeCalcTimes(nodeNumber);  //各个node上的总计算代价
     //遍历所有分区
     for(const auto & partition : this->partitions) {
         //如果该partition是失效partition，将其计算成本计入代价中

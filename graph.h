@@ -10,7 +10,7 @@
 /*-----------------------------------------------------------*/
 
 const int nodeNumber = 3;       //后面要改成通过命令行/文件输入的形式
-const int failedNodeId = 3;
+const int failedNodeId = 2;
 
 struct Edge{
     int targetPartitionId;//目标分区ID
@@ -48,7 +48,7 @@ class GRAPH {
 
     struct Solution{
         std::vector<int>    par2node;
-        int cost;
+        double cost;
     };
 
     Solution best_sol, last_sol;    //保存的最优解和最新解
