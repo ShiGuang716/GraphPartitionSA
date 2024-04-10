@@ -36,7 +36,7 @@ double std_var(std::vector<double> &chain){
   return var;
 }
 
-double SA_Partition(GRAPH &graph, int k, int local=0, float term_T=0.1){
+double SA_Partition(GRAPH &graph, int k, int local, float term_T){
     int MT, uphill, reject;
     double pre_cost, best, cost;
     float d_cost, reject_rate;
