@@ -15,7 +15,7 @@ int main(){
 
     try{
         double time = seconds();
-        GRAPH graph(1.0, 1.0);
+        GRAPH graph(1.0, 1.0, 0.5);
         graph.read(filename);
         graph.normalizeCost(10);
         //graph.init();   //TODO    做个归一化

@@ -40,10 +40,12 @@ struct Partition{
 
 class GRAPH {
     public:
-    int V;                              //顶点个数
+    int V, V2;                          //顶点个数，失效分区个数
     std::vector<Partition>  partitions; //顶点（分区）列表
 
     double perMesCost, perCalcCost; //单次通信成本和单次计算成本
+    double gamma;
+
     double normCost;   //归一化总成本
 
     std::vector<int>    par2node;   //partitionId到nodeId的映射
@@ -56,8 +58,9 @@ class GRAPH {
     Solution best_sol, last_sol;    //保存的最优解和最新解
 
     public:
-    GRAPH(double c1 = 1.0, double c2 = 1.0){
+    GRAPH(double c1 = 1.0, double c2 = 1.0, double c3 = 0.5){
         perCalcCost = c1, perMesCost = c2;
+        gamma = c3;
     }
 
     /**

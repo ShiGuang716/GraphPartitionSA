@@ -44,6 +44,14 @@ void GRAPH::read(char * filename){
         par2node[i] = Partition::getInitNodeId(i);
     }
 
+    //统计失效分区个数
+    this->V2 = 0;
+    for(auto &P : this->partitions) {
+        if(Partition::isFailedPartition(P.Id)){
+            ++this->V2;
+        }
+    }
+
     //输出读取的图结构
     // for(const auto& partition : partitions) {
     //     std::cout<<partition.Id<<" "<<partition.calcTimes<<"   ";
@@ -53,10 +61,6 @@ void GRAPH::read(char * filename){
     //     }
     //     std::cout<<std::endl;
     // }
-}
-
-void GRAPH::packing(){
-    
 }
 
 float swap_rate = 0.5;      //50%概率交换，50%概率移动
@@ -109,6 +113,7 @@ void GRAPH::recover_best(){
 }
 
 double GRAPH::getCost(){
+    double totalCost = 0;
     int totalMesTimes = 0, totalCalcTimes = 0;
     std::vector<int> perNodeCalcTimes(nodeNumber);  //各个node上的总计算代价
     //遍历所有分区
@@ -147,7 +152,22 @@ double GRAPH::getCost(){
     //获取各个node计算次数的最大值，作为总计算次数
     totalCalcTimes = *std::max_element(perNodeCalcTimes.begin(), perNodeCalcTimes.end());
 
-    double totalCost = perMesCost*totalMesTimes + perCalcCost*totalCalcTimes;
+    totalCost += gamma*(perMesCost*totalMesTimes + perCalcCost*totalCalcTimes);
+
+    std::vector<double> perNodeWeights(nodeNumber);    //各个node上的失效分区权重
+    for(const auto & P : this->partitions) {
+        //如果该分区是失效分区，将其所在node的权重加1
+        if(Partition::isFailedPartition(P.Id)) {
+            perNodeWeights[par2node[P.Id]] += 1;
+        }
+    }
+
+    double Tib = 0;
+    for(double Wi : perNodeWeights) {
+        Tib += (Wi - 1.0*V2/nodeNumber) * (Wi - 1.0*V2/nodeNumber);
+    }
+
+    totalCost += (1-gamma) * Tib / V2;
 
     return totalCost / normCost;
 }
